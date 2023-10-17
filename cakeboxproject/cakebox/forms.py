@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from cakebox.models import User,Category,Cakes,CakeVarient
+from cakebox.models import User,Category,Cakes,CakeVarient,Offer
 
 class RegistrationForm(UserCreationForm):
     class Meta:
@@ -26,3 +26,10 @@ class CakeVarientForm(forms.ModelForm):
     class Meta:
         model=CakeVarient
         exclude=("cake",)
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model=Offer
+        exclude=("cakevarient",)
+        widgets={"start_date":forms.DateInput(attrs={"type":"date"}),
+                "end_date":forms.DateInput(attrs={"type":"date"}) }

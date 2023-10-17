@@ -3,14 +3,14 @@ from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.views.generic import View,FormView,ListView,CreateView,UpdateView
+from django.views.generic import View,FormView,ListView,CreateView,UpdateView,DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 
 
-from cakebox.models import User,Category,Cakes,CakeVarient
-from cakebox.forms import RegistrationForm,LoginForm,CategoryAddForm,CakeAddForm,CakeVarientForm
+from cakebox.models import User,Category,Cakes,CakeVarient,Offer
+from cakebox.forms import RegistrationForm,LoginForm,CategoryAddForm,CakeAddForm,CakeVarientForm,OfferForm
 
 # Create your views here.
 
@@ -107,10 +107,50 @@ class CakeVarientView(CreateView):
     model=CakeVarient
     success_url=reverse_lazy("cake-list")
     def form_valid(self, form):
+        id=self.kwargs.get("pk")
+        obj=Cakes.objects.get(id=id)
+        form.instance.cake=obj
         messages.success(self.request,"cakevarient added")
         return super().form_valid(form)
     def form_invalid(self, form):
         messages.error(self.request,"cakevarient adding failed")
+        return super().form_invalid(form)
+    
+class CakeDetailView(DetailView):
+    template_name="cakebox/cake_detail.html"
+    model=Cakes
+    context_object_name="cake"
+
+class CakeVarientUpdateView(UpdateView):
+    template_name="cakebox/varient_edit.html"
+    form_class=CakeVarientForm
+    model=CakeVarient
+    success_url=reverse_lazy("cake-list")
+    def form_valid(self, form):
+        messages.success(self.request,"cakevarient updated")
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.error(self.request,"cakevarient updating failed")
+        return super().form_invalid(form)
+
+def remove_varient(request,*args,**kwargs):
+    id=kwargs.get("pk")
+    CakeVarient.objects.filter(id=id).delete()
+    return redirect("cake-list")
+
+class OfferCreateView(CreateView):
+    template_name="cakebox/offer_add.html"
+    model=Offer
+    form_class=OfferForm
+    success_url=reverse_lazy("cake-list")
+    def form_valid(self, form):
+        id=self.kwargs.get("pk")
+        obj=CakeVarient.objects.get(id=id)
+        form.instance.cakevarient=obj
+        messages.success(self.request,"Offer hasbeen added successfully")
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.error(self.request,"Offer adding failed")
         return super().form_invalid(form)
     
 

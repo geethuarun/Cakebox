@@ -30,10 +30,10 @@
                 </td>
 
                 <td>
-                    <a href="{%url 'cake-remove' ck.id%}">delete</a>
+                    <a href="{%url 'cake-remove' ck.id%}" class="btn btn-outline-danger">delete</a>
                     
-                    <a href="{%url 'add-varient' ck.id%}">add cakevarient</a>
-                    <a href="">view</a>
+                    <a href="{%url 'add-varient' ck.id%}" class="btn btn-outline-success">add cakevarient</a>
+                    <a href="{%url 'cake-detail' ck.id%}" class="btn btn-outline-info">view</a>
                 </td>
             </tr>
             {%endfor%}
