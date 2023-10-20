@@ -3,7 +3,7 @@ from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.views.generic import View,FormView,ListView,CreateView,UpdateView,DetailView
+from django.views.generic import View,FormView,ListView,CreateView,UpdateView,DetailView,TemplateView
 from django.urls import reverse_lazy,reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -59,7 +59,7 @@ class SignInView(FormView):
             if usr:
                 login(request,usr)
                 messages.success(request,"login successfully ")
-                return redirect("signin")
+                return redirect("index")
             else:
                 messages.error(request,"invalid credentials")
                 return render(request,self.template_name,{"form":form})
@@ -209,6 +209,8 @@ def sign_out_view(request,*args,**kwargs):
     logout(request)
     return redirect("signin")
 
+class IndexView(TemplateView):
+    template_name="cakebox/index.html"
         
     
 

@@ -1,7 +1,7 @@
 from django.urls import path
 from cakebox.views import SignUpView,SignInView,CategoryView,remove_category,CakeCreateView,\
 CakeListView,CakeUpdateView,remove_cakeview,CakeVarientView,CakeDetailView,CakeVarientUpdateView,\
-remove_varient,OfferCreateView,delete_offer_view,sign_out_view
+remove_varient,OfferCreateView,delete_offer_view,sign_out_view,IndexView
 
 
 
@@ -20,6 +20,7 @@ urlpatterns=[
     path("varient/<int:pk>/remove",remove_varient,name="remove-varient"),
     path("varient/<int:pk>/offer/add",OfferCreateView.as_view(),name="offers-add"),
     path("offers/<int:pk>/remove",delete_offer_view,name="delete-offer"),
-    path("signout/",sign_out_view,name="signout")
+    path("signout/",sign_out_view,name="signout"),
+    path("index",IndexView.as_view(),name="index")
     
 ]
