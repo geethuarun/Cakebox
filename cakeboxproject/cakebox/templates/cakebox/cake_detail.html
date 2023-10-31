@@ -1,95 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-<body style="height: 100vh;">
-    
+{%extends "cakebox/base.html"%}
+{%block body_block%}
 <div class="container">
 
-    <div class="row">
+  <div class="row">
 
-        <div class="col-4 mt-5">
-            <div class="card" style="width:100%">
-                <img src="{{cake.image.url}}" class="card-img-top" alt="..." height="200px">
-                <div class="card-body">
-                  <h5 class="card-title">{{cake.flavour}}</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <!-- <li class="list-group-item"></li>
-                  <li class="list-group-item"></li> -->
-                  <li class="list-group-item">{{cake.type_of_cake}}</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
+      <div class="col-4 mt-5">
+          <div class="card" style="width:100%">
+              <img src="{{cake.image.url}}" class="card-img-top" alt="..." height="200px">
+              <div class="card-body">
+                <h5 class="card-title">{{cake.flavour}}</h5>
               </div>
-        </div>
-         <div class="col-8 border boredr-dark">
-           <table class="table table-striped">
-            <tr>
-                
-                <td>Shape</td>
-                <td>Weight</td>
-                <td>Version</td>
-                <td>Price</td>
-                <td>Action</td>
-            </tr>
-            {%for v in cake.cakevarient_set.all%}
-
-                <tr>
-                    <td>{{v.shape}}</td>
-                    <td>{{v.weight}}</td>
-                    <td>{{v.version}}</td>
-                    <td>{{v.price}}</td>
-                    
-        
-                    
-                    
-                    <td>
-                      <a href="{%url 'varient-change' v.id%}" class="btn btn-outline-info">Edit</a>
-                      <a href="{%url 'remove-varient' v.id%}" class="btn btn-outline-danger">remove</a>
-                   
-                      <a href="{%url 'offers-add' v.id%}" class="btn btn-outline-success">add offer</a>
-                    </td>
-                </tr>
-            {%endfor%}
-
-           </table>
-        </div> 
-         <div class="row">
-    {%for v in cake.cakevarient_set.all%}
-      {%for o in v.offer_set.all%}
-    <div class="border p-3">
-
-      <div>
-        size {{o.cakevarient.version}} | color {{o.cakevarient.weight}}
+              <ul class="list-group list-group-flush">
+                <!-- <li class="list-group-item"></li>
+                <li class="list-group-item"></li> -->
+                <li class="list-group-item">{{cake.type_of_cake}}</li>
+              </ul>
+              <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div>
       </div>
+       <div class="col-8 border boredr-dark">
+         <table class="table table-striped">
+          <tr>
+              
+              <td>Shape</td>
+              <td>Weight</td>
+              <td>Version</td>
+              <td>Price</td>
+              <td>Action</td>
+          </tr>
+          {%for v in cake.cakevarient_set.all%}
 
-      <div><span>offer price$ {{o.price}}</span></div>
-      <div>start_date : {{o.start_date}}</div>
-      <div>due_date :{{o.end_date}}</div>
-      <a href="{%url 'delete-offer' o.id%}">delete</a>
+              <tr>
+                  <td>{{v.shape}}</td>
+                  <td>{{v.weight}}</td>
+                  <td>{{v.version}}</td>
+                  <td>{{v.price}}</td>
+                  
+      
+                  
+                  
+                  <td>
+                    <a href="{%url 'varient-change' v.id%}" class="btn btn-outline-info">Edit</a>
+                    <a href="{%url 'remove-varient' v.id%}" class="btn btn-outline-danger">remove</a>
+                 
+                    <a href="{%url 'offers-add' v.id%}" class="btn btn-outline-success">add offer</a>
+                  </td>
+              </tr>
+          {%endfor%}
+
+         </table>
+      </div> 
+       <div class="row">
+  {%for v in cake.cakevarient_set.all%}
+    {%for o in v.offer_set.all%}
+  <div class="border p-3">
+
+    <div>
+      size {{o.cakevarient.version}} | color {{o.cakevarient.weight}}
     </div>
-      {%endfor%}
 
+    <div><span>offer price$ {{o.price}}</span></div>
+    <div>start_date : {{o.start_date}}</div>
+    <div>due_date :{{o.end_date}}</div>
+    <a href="{%url 'delete-offer' o.id%}">delete</a>
+  </div>
     {%endfor%}
 
-      
+  {%endfor%}
+
+    
 
 
 
-    </div>
+  </div>
 
 
 
 </div>
+</div>
 
+{%endblock%}
 
-
-</body>
-</html>
