@@ -19,6 +19,10 @@ class Cakes(models.Model):
      
      image=models.ImageField(upload_to="images")
      type_of_cake=models.ForeignKey(Category,on_delete=models.CASCADE)
+     @property
+     def varients(self):
+          qs=self.cakevarient_set.all()
+          return qs
 
 
      def __str__(self):
@@ -38,6 +42,9 @@ class CakeVarient(models.Model):
               ("2kg","2kg"))
      weight=models.CharField(max_length=200,choices=options,default="1kg")
      price=models.PositiveIntegerField()
+
+     def __str__(self):
+          return self.cake.flavour 
      
 
 class Offer(models.Model):
