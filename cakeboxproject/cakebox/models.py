@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import date
 
 # Create your models here.
 
@@ -23,6 +24,14 @@ class Cakes(models.Model):
      def varients(self):
           qs=self.cakevarient_set.all()
           return qs
+     @property
+     def reviews(self):
+          qs=self.reviews_set.all()
+          return  qs
+     @property
+     def avg_rating(self):
+          ratings=self.reviews_set.all().values_list("rating",flat=True)
+          return sum(ratings)/len(ratings) if ratings else 0
 
 
      def __str__(self):
@@ -45,6 +54,12 @@ class CakeVarient(models.Model):
 
      def __str__(self):
           return self.cake.flavour 
+     
+     def offer(self):
+          current_date=date.today()
+          qs=self.offer_set.all()
+          qs=qs.filter(end_date__gte=current_date)
+          return qs
      
 
 class Offer(models.Model):
@@ -79,7 +94,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 
 class Reviews(models.Model):
      user=models.ForeignKey(User,on_delete=models.CASCADE)
-     cakevarient=models.ForeignKey(CakeVarient,on_delete=models.CASCADE)
+     cake=models.ForeignKey(Cakes,null=True,on_delete=models.SET_NULL)
      rating=models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
      comment=models.CharField(max_length=300)
      

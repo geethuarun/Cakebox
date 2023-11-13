@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cakebox',
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     
 ]
 
